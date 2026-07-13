@@ -80,6 +80,28 @@ export const COLORS = {
   accentFaded: '#e8b4a8',
 } as const;
 
+/**
+ * Whirlpool: velocity-reactive rotation for carousels. While the damped
+ * scroll is moving, items swing by up to maxTilt degrees — scaled and
+ * signed by their offset from the viewport center (in-focus items stay
+ * level, the column swirls) — and ease back to level as velocity dies.
+ */
+export const WHIRLPOOL = {
+  /** deg cap for the swirl */
+  maxTilt: 6,
+  /** |scroll velocity| (Lenis units) that maps to full tilt */
+  maxVelocity: 60,
+} as const;
+
+/** Pointer-tracked 3D tilt for media cards (decoded via cursor probe). */
+export const CARD_TILT = {
+  /** deg of rotateX/rotateY at the card's edges */
+  maxDeg: 6,
+  /** px translational lean toward the cursor */
+  lean: 10,
+  perspective: 900,
+} as const;
+
 export const prefersReducedMotion = (): boolean =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;

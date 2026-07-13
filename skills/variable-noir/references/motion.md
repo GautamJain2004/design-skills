@@ -36,6 +36,9 @@ this is most of the "expensive" feel.
 | Cursor follow: same damped lerp; cursor grows to a "link" state over anchors | `gsap.quickTo(el, 'x'/'y', { duration: 0.5, ease: 'power2.out' })`; scale quickTo on hover of `a, button, [data-cursor]` | `DampedCursor` |
 | SPA router: full-screen wipe between routes, routes preloaded on link hover (`hoverPreload`) | Overlay `yPercent: 100 → 0 → −100` wipe around `router.push`; `router.prefetch(href)` on `mouseenter` | `PageTransition` / `TransitionLink` |
 | Work carousel: numbered giant titles ride the damped scroll; color grades by focus proximity; tilted media cards outrun the titles (parallax) | Per-title scrubbed color timeline (`scrub: true`, `ease: 'none'`), per-card scrubbed `yPercent` parallax, constant ±8° base tilt | `ScrubCarousel` |
+| Whirlpool: during scroll bursts, carousel items rotate a few degrees — more the further they sit from the focus band, opposite signs above vs. below center — and straighten as the damped scroll settles | Per-item `gsap.quickTo(el, 'rotation')` re-targeted from Lenis `scroll` events: `(velocity / maxVelocity) × maxTilt × centerOffset × 2`, house ease supplies the settle | `WhirlpoolCarousel` |
+| Media cards track the cursor in 3D: card leans toward the pointer, and the edge under it dips away (bottom → pitch down, right → yaw right); damped follow, rests on leave | `transformPerspective` + four `gsap.quickTo` channels (rotationX/rotationY/x/y) driven by normalized pointer position within the card | `TiltCard` |
+| Section arrival: hairline rule draws across, small label rises, content staggers in as the section scrolls into view | Once-only ScrollTrigger timeline: `scaleX 0→1` on the rule (0.8s), label rise (0.3s), children wave at `<0.1` offsets | `SectionIntro` |
 | Fluid spacing `calc(Apx + Bvw)` | CSS custom properties with `clamp()` — see `layout.md` | — |
 
 ## The work carousel (decoded from video forensics)
