@@ -1,0 +1,16 @@
+{
+  "name": "design-skills",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent skills for extracting and working with web designs",
+  "type": "module",
+  "scripts": {
+    "extract": "node skills/design-extractor/scripts/extract.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1"
+  }
+}
