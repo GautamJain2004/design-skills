@@ -54,7 +54,7 @@ npm i gsap @gsap/react lenis
 | `StaggerGroup` | Wave stagger of direct children via timeline relative offsets. |
 | `ScrubCarousel` | Scroll-scrubbed work list: numbered giant titles that color-grade through a focus band, tilted media cards with parallax. |
 | `DampedCursor` | Trailing dot cursor (`gsap.quickTo`), grows over interactive elements. |
-| `WhirlpoolCarousel` | ScrubCarousel + velocity swirl: items rotate while the scroll moves (more when far from the focus band, opposite signs above/below center) and ease back level at rest. Same props as ScrubCarousel — use one or the other. |
+| `WhirlpoolCarousel` | Standalone vortex work list (same props as ScrubCarousel — pick one per page): media cards ride a position-scrubbed half-orbit (rotation/yaw/shear linear in progress, depth scale + z-ordering, visibility window, rightward eclipse exit), titles color-grade and swirl transiently with fast scrolling. |
 | `TiltCard` | Pointer-tracked 3D tilt for media cards: the card leans toward the cursor and the edge under it dips away; damped, resets on leave. |
 | `SectionIntro` | Announces a section's arrival: hairline rule draws across, small label rises, content waves in — once, on enter. |
 

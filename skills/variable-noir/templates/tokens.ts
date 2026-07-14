@@ -81,16 +81,54 @@ export const COLORS = {
 } as const;
 
 /**
- * Whirlpool: velocity-reactive rotation for carousels. While the damped
- * scroll is moving, items swing by up to maxTilt degrees — scaled and
- * signed by their offset from the viewport center (in-focus items stay
- * level, the column swirls) — and ease back to level as velocity dies.
+ * Whirlpool carousel motion (decoded from the reference engine): media
+ * cards are scrubbed by traversal progress D ∈ [−1, +1] (0 at the focus
+ * band) — in-plane rotation sweeps with D and the card drifts sideways
+ * through mid-traversal, tracing an arc like being stirred. Titles get a
+ * transient velocity swirl on top, settling level at rest.
  */
 export const WHIRLPOOL = {
-  /** deg cap for the swirl */
+  /** deg — media rotation across the traversal: −sweep entering → +sweep
+   *  exiting. Rotation crosses 0° at the focus band, so what's visible is
+   *  roughly ±0.7·sweep at the window edges — size sweep for THAT. */
+  sweep: 24,
+  /** px — horizontal orbit radius: the card swings this far LEFT of its
+   *  rest position by mid-traversal and returns RIGHT as it rises past.
+   *  The rest position itself is inset from the left edge (ScrubCarousel's
+   *  media `left`), which is what offsets the ellipse center. */
+  driftX: 160,
+  /** px — vertical orbit radius. Sized so the card arrives beside its
+   *  title as the title colors up (bigger values make the card lag its
+   *  title around the focus band, which hides the photo). */
+  travelY: 380,
+  /** px — extra RIGHTWARD drift through the exit half only: zero until
+   *  focus, then the card clears right while fading as the next card takes
+   *  its place — the eclipse relay. */
+  exitX: 260,
+  /** deg — 3D yaw across the traversal (engine: rotationY = 4·D) */
+  yaw: 150,
+  /** deg — scrubbed skew, the DOM stand-in for the engine's shader twist
+   *  (u_twist = D): the card shears as it enters/exits, flat in focus */
+  twist: 5,
+  /** depth scale at the traversal edges (1 at the focus band) */
+  scaleMin: 0.85,
+  /** exponent on the depth curve — lower = wider plateau near focus */
+  depthEase: 0.6,
+  /** zIndex granularity for depth ordering (titles sit above this range) */
+  zRange: 100,
+  /** traversal window outside which the card is hidden (engine gates
+   *  planes to V ∈ [0.15, 0.8]) — keeps at most ~2 cards on screen so
+   *  each card's rotation stays legible */
+  visibleFrom: 0.12,
+  visibleTo: 0.8,
+  /** traversal fraction over which the card fades at the window edges */
+  fade: 0.05,
+  /** deg cap for the transient title swirl */
   maxTilt: 6,
-  /** |scroll velocity| (Lenis units) that maps to full tilt */
-  maxVelocity: 60,
+  /** |scroll velocity| (Lenis units) that maps to full title tilt */
+  maxVelocity: 25,
+  /** s — how fast the title swirl re-targets and settles */
+  settle: 0.4,
 } as const;
 
 /** Pointer-tracked 3D tilt for media cards (decoded via cursor probe). */

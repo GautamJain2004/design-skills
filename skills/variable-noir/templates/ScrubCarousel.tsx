@@ -124,20 +124,34 @@ export function ScrubCarousel({
         >
           {item.media && (
             <div
-              data-carousel-media
               aria-hidden
               style={{
+                // Layout-only shell: inset rest position with breathing room
+                // on the left and a smaller card, matching the reference
+                // composition. It spans the full row and centers the card
+                // beside its title by flex, so the animated inner element
+                // below starts transform-clean and GSAP never fights the
+                // centering.
                 position: 'absolute',
-                left: 0,
-                top: '50%',
-                width: 'min(48%, 720px)',
-                translate: '0 -50%',
-                rotate: `${i % 2 === 0 ? -CAROUSEL.tilt : CAROUSEL.tilt}deg`,
+                left: '15%',
+                top: 0,
+                height: '100%',
+                width: 'min(35%, 600px)',
+                display: 'flex',
+                alignItems: 'center',
                 zIndex: 0,
                 pointerEvents: 'none',
               }}
             >
-              {item.media}
+              <div
+                data-carousel-media
+                style={{
+                  width: '100%',
+                  rotate: `${i % 2 === 0 ? -CAROUSEL.tilt : CAROUSEL.tilt}deg`,
+                }}
+              >
+                {item.media}
+              </div>
             </div>
           )}
           <div style={{ position: 'relative', zIndex: 1, textAlign: 'right' }}>
